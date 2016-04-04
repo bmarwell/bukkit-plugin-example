@@ -11,6 +11,9 @@
 
 package de.bmarwell.bukkit;
 
+import de.bmarwell.bukkit.listener.PlayerTeleportListener;
+
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -26,6 +29,15 @@ public class ExamplePlugin extends JavaPlugin {
 
   @Override
   public void onEnable() {
+    // 1.) init your config.
+
+    // 2.) register events.
+    registerEvents();
+  }
+
+  private void registerEvents() {
+    Bukkit.getServer().getPluginManager().registerEvents(
+        new PlayerTeleportListener(), this);
   }
 
 }
