@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 /**
  * React on player teleport events.
@@ -31,12 +32,15 @@ public class PlayerTeleportListener implements Listener {
       return;
     }
 
-    // Undo all teleports manually.
+    // If this is not an ender teleport, don't bother.
+    if (!TeleportCause.ENDER_PEARL.equals(event.getCause())) {
+      return;
+    }
+
     Player teleportedPlayer = event.getPlayer();
     Location origin = event.getFrom();
-    event.getCause();
 
-    boolean teleportSuccess = teleportedPlayer.teleport(origin);
+    boolean teleportSuccess = teleportedPlayer.teleport(origin, TeleportCause.PLUGIN);
     // TODO: log teleportSuccess;
   }
 
