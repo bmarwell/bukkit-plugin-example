@@ -24,7 +24,7 @@ public class PlayerTeleportListener implements Listener {
 
   @EventHandler
   public void onPlayerTeleport(PlayerTeleportEvent event) {
-    // TODO: do something!
+    event.setCancelled(true);
   }
 
 }
