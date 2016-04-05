@@ -11,6 +11,8 @@
 
 package de.bmarwell.bukkit.listener;
 
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -24,7 +26,18 @@ public class PlayerTeleportListener implements Listener {
 
   @EventHandler
   public void onPlayerTeleport(PlayerTeleportEvent event) {
-    event.setCancelled(true);
+    // if this event was cancelled, why bother?
+    if (event.isCancelled()) {
+      return;
+    }
+
+    // Undo all teleports manually.
+    Player teleportedPlayer = event.getPlayer();
+    Location origin = event.getFrom();
+    event.getCause();
+
+    boolean teleportSuccess = teleportedPlayer.teleport(origin);
+    // TODO: log teleportSuccess;
   }
 
 }
