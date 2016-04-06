@@ -11,8 +11,9 @@
 
 package de.bmarwell.bukkit.listener;
 
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import de.bmarwell.bukkit.events.PlayerTeleportCancelledEvent;
+
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -37,11 +38,12 @@ public class PlayerTeleportListener implements Listener {
       return;
     }
 
-    Player teleportedPlayer = event.getPlayer();
-    Location origin = event.getFrom();
+    event.setCancelled(true);
 
-    boolean teleportSuccess = teleportedPlayer.teleport(origin, TeleportCause.PLUGIN);
-    // TODO: log teleportSuccess;
+    // Call the event cancelled event to notify others.
+    PlayerTeleportCancelledEvent ptce = new PlayerTeleportCancelledEvent(event.getPlayer(),
+        event.getFrom(), event.getTo(), "You may not throw ender pearls!!", event.getCause());
+    Bukkit.getServer().getPluginManager().callEvent(ptce);
   }
 
 }
