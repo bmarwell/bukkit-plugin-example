@@ -1,0 +1,10 @@
+
+cancel:
+  # Choose which teleport to stop. Possible values:
+  # - ENDER_PEARL (throwing an ender pearl).
+  # - PLUGIN (caused by a plugin).
+  # - COMMAND (like /tp or others).
+  # - SPECTATE (disables spectator functionality).
+  # - UNKNOWN (disables teleports with unknown causes).
+  # Note: Any other value will disable the functionality.
+  cause: ENDER_PEARL
