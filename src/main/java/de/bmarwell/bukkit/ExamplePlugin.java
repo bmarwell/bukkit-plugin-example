@@ -23,6 +23,8 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class ExamplePlugin extends JavaPlugin {
 
+  private ExamplePluginConfig config = null;
+
   @Override
   public void onDisable() {
   }
@@ -30,6 +32,7 @@ public class ExamplePlugin extends JavaPlugin {
   @Override
   public void onEnable() {
     // 1.) init your config.
+    this.config = new ExamplePluginConfig(this);
 
     // 2.) register events.
     registerEvents();
@@ -37,7 +40,7 @@ public class ExamplePlugin extends JavaPlugin {
 
   private void registerEvents() {
     Bukkit.getServer().getPluginManager().registerEvents(
-        new PlayerTeleportListener(), this);
+        new PlayerTeleportListener(config), this);
   }
 
 }

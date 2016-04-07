@@ -11,6 +11,7 @@
 
 package de.bmarwell.bukkit.listener;
 
+import de.bmarwell.bukkit.ExamplePluginConfig;
 import de.bmarwell.bukkit.events.PlayerTeleportCancelledEvent;
 
 import org.bukkit.Bukkit;
@@ -26,6 +27,12 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
  */
 public class PlayerTeleportListener implements Listener {
 
+  private ExamplePluginConfig config = null;
+
+  public PlayerTeleportListener(final ExamplePluginConfig config) {
+    this.config = config;
+  }
+
   @EventHandler
   public void onPlayerTeleport(PlayerTeleportEvent event) {
     // if this event was cancelled, why bother?
@@ -33,8 +40,15 @@ public class PlayerTeleportListener implements Listener {
       return;
     }
 
-    // If this is not an ender teleport, don't bother.
-    if (!TeleportCause.ENDER_PEARL.equals(event.getCause())) {
+    if (!config.getTeleportCauseToCancel().isPresent()) {
+      // No event defined which could be cancelled.
+      return;
+    }
+
+    TeleportCause cancelCause = config.getTeleportCauseToCancel().get();
+
+    // If this is not a configured teleport cause, so don't bother.
+    if (!cancelCause.equals(event.getCause())) {
       return;
     }
 
